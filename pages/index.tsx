@@ -1,12 +1,36 @@
 import Head from 'next/head';
 import { Inter } from 'next/font/google';
-import styles from '@/styles/Home.module.css';
-import { Button } from '@mui/material';
 import axios from 'axios';
+import MovieCard from './components/MovieCard';
+import { Grid } from '@mui/material';
+import Container from './components/Container';
+import FiltersSection, { GenreProps } from './components/FiltersSection';
+import Link from 'next/link';
 
-const inter = Inter({ subsets: ['latin'] });
+export interface MovieProps {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
 
-export default function Home({ data }: { data: any }) {
+export default function Home({
+  moviesData,
+  genresData,
+}: {
+  moviesData: { page: number; results: MovieProps[]; total_pages: number; total_results: number };
+  genresData: { genres: GenreProps[] };
+}) {
   return (
     <>
       <Head>
@@ -15,14 +39,19 @@ export default function Home({ data }: { data: any }) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className={`${styles.main} ${inter.className}`}>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <span>best planet: {data.name}</span>
-          <span>orbital_period: {data.orbital_period}</span>
-          <span>diameter: {data.diameter}</span>
-          <span>climate: {data.climate}</span>
-        </div>
-        <Button variant='contained'>Movies Test</Button>
+      <main>
+        <Container>
+          <FiltersSection genresData={genresData} />
+          <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 1, sm: 3, md: 5 }}>
+            {moviesData.results.map((movie: MovieProps) => (
+              <Grid item xs={1} key={movie.id}>
+                <Link href={`/` + movie.id} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <MovieCard movie={movie} />
+                </Link>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
       </main>
     </>
   );
@@ -30,11 +59,27 @@ export default function Home({ data }: { data: any }) {
 
 export async function getServerSideProps() {
   try {
-    const res = await axios.get('https://swapi.dev/api/planets/1');
+    const moviesRes = await axios.get(
+      'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=true&language=en-US&page=1&sort_by=vote_count.desc',
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    const genresRes = await axios.get('https://api.themoviedb.org/3/genre/movie/list?language=en', {
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+    });
 
     return {
       props: {
-        data: res.data,
+        moviesData: moviesRes.data,
+        genresData: genresRes.data,
       },
     };
   } catch (error) {

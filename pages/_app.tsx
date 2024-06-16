@@ -5,7 +5,9 @@ import { AppCacheProvider } from '@mui/material-nextjs/v14-pagesRouter';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { amber, blueGrey, red, indigo } from '@mui/material/colors';
-import { Box, IconButton, PaletteMode } from '@mui/material';
+import { PaletteMode } from '@mui/material';
+import Layout from './layout';
+import { useMemo, useState } from 'react';
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
@@ -43,8 +45,8 @@ const getDesignTokens = (mode: PaletteMode) => ({
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
 
-  const [mode, setMode] = React.useState<PaletteMode>('light');
-  const colorMode = React.useMemo(
+  const [mode, setMode] = useState<PaletteMode>('light');
+  const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {
         setMode((prevMode: PaletteMode) => (prevMode === 'light' ? 'dark' : 'light'));
@@ -53,7 +55,7 @@ export default function MyApp(props: AppProps) {
     []
   );
 
-  const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+  const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
   return (
     <AppCacheProvider {...props}>
@@ -63,7 +65,7 @@ export default function MyApp(props: AppProps) {
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Box
+          {/* <Box
             sx={{
               display: 'flex',
               width: '100%',
@@ -78,8 +80,10 @@ export default function MyApp(props: AppProps) {
             <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color='inherit'>
               {theme.palette.mode === 'dark' ? 'dark' : 'light'}
             </IconButton>
-          </Box>
+          </Box> */}
+          <Layout colorMode={colorMode}>
           <Component {...pageProps} />
+          </Layout>
         </ThemeProvider>
       </ColorModeContext.Provider>
     </AppCacheProvider>
