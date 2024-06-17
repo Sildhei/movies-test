@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import { Box, Card } from '@mui/material';
-import { MovieProps } from '..';
 import { grey, yellow, red } from '@mui/material/colors';
 import { useTheme } from '@mui/material/styles';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import GradeIcon from '@mui/icons-material/Grade';
+import { MovieProps } from '@/interfaces';
 
 const MovieCard = ({ movie }: { movie: MovieProps }) => {
   const theme = useTheme();

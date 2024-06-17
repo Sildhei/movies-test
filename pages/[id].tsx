@@ -2,62 +2,13 @@ import { useSelector } from 'react-redux';
 import { GetServerSidePropsContext } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Box, Card, List, ListItem } from '@mui/material';
 import axios from 'axios';
+import { Box, Card, List, ListItem } from '@mui/material';
+import { MovieDetailsProps, MovieProps } from '@/interfaces';
 import { useTheme } from '@mui/material/styles';
-import Container from './components/Container';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { grey, red } from '@mui/material/colors';
-import { MovieProps } from '.';
-
-export interface MovieDetailsProps {
-  adult: boolean;
-  backdrop_path: string;
-  belongs_to_collection: {
-    id: number;
-    name: string;
-    poster_path: string;
-    backdrop_path: string;
-  } | null;
-  budget: number;
-  genres: {
-    id: number;
-    name: string;
-  }[];
-  homepage: string;
-  id: number;
-  imdb_id: string;
-  origin_country: string[];
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  production_companies: {
-    id: number;
-    logo_path: string;
-    name: string;
-    origin_country: string;
-  }[];
-  production_countries: {
-    iso_3166_1: string;
-    name: string;
-  }[];
-  release_date: string;
-  revenue: number;
-  runtime: number;
-  spoken_languages: {
-    english_name: string;
-    iso_639_1: string;
-    name: string;
-  }[];
-  status: string;
-  tagline: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
+import Container from './components/Container';
 
 export default function MovieDetails({
   movieDetails,

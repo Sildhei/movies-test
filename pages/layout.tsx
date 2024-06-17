@@ -1,15 +1,16 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import NavBar from './components/NavBar';
 
 export default function Layout({
-  children, colorMode
+  children,
+  colorMode,
 }: Readonly<{
   children: ReactNode;
-  colorMode: {toggleColorMode: () => void};
+  colorMode: { toggleColorMode: () => void };
 }>) {
   return (
     <>
-      <NavBar colorMode={colorMode}/>
+      <NavBar colorMode={colorMode} />
       <main>{children}</main>
     </>
   );

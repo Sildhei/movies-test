@@ -1,11 +1,11 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { nameSetting, genreSetting } from '../../redux/filters';
 import { Box, Button, IconButton, MenuItem, TextField } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import { red } from '@mui/material/colors';
 import ClearIcon from '@mui/icons-material/Clear';
+import { nameSetting, genreSetting } from '../../redux/filters';
 
 export interface GenreProps {
   id: number;
@@ -55,15 +55,15 @@ const FiltersSection = ({ genresData }: { genresData: { genres: GenreProps[] } }
   useEffect(() => {
     if (inputValue === '') {
       return;
-      // router.push(`/?genre=${filters.genre}`);
     }
     const delayInputTimeoutId = setTimeout(() => {
       dispatch(nameSetting(inputValue));
       dispatch(genreSetting(''));
       router.push(`/?name=${inputValue}`);
     }, 500);
+    // eslint-disable-next-line consistent-return
     return () => clearTimeout(delayInputTimeoutId);
-  }, [inputValue, 500]);
+  }, [inputValue, router, dispatch]);
 
   return (
     <Box

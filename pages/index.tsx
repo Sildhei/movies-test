@@ -2,28 +2,11 @@ import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import axios from 'axios';
-import MovieCard from './components/MovieCard';
+import { MovieProps } from '@/interfaces';
 import { Box, Grid } from '@mui/material';
+import MovieCard from './components/MovieCard';
 import Container from './components/Container';
-import { GenreProps } from './components/FiltersSection';
-import FiltersSection from './components/FiltersSection';
-
-export interface MovieProps {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
-  id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
+import FiltersSection, { GenreProps } from './components/FiltersSection';
 
 export default function Home({
   moviesData,
@@ -31,7 +14,6 @@ export default function Home({
 }: {
   moviesData: { page: number; results: MovieProps[]; total_pages: number; total_results: number };
   genresData: { genres: GenreProps[] };
-  searchParams: { [key: string]: string | undefined };
 }) {
   return (
     <>
@@ -48,7 +30,7 @@ export default function Home({
           <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 1, sm: 3, md: 5 }} marginBottom={5}>
             {moviesData?.results.map((movie: MovieProps) => (
               <Grid item xs={1} key={movie.id}>
-                <Link href={`/` + movie.id} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Link href={`/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <MovieCard movie={movie} />
                 </Link>
               </Grid>
@@ -61,8 +43,7 @@ export default function Home({
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const name = context.query.name;
-  const genre = context.query.genre;
+  const { name, genre } = context.query;
 
   let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}`;
   if (name) {
