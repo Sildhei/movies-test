@@ -22,7 +22,7 @@ const MovieCard = ({ movie }: { movie: MovieProps }) => {
       }}>
       {movie && (
         <Box height='280px' bgcolor={theme.palette.mode === 'dark' ? grey[900] : grey[300]}>
-          <div style={{ position: 'relative', width:'100%', height:'180px' }}>
+          <div style={{ position: 'relative', width: '100%', height: '180px' }}>
             <Image
               src={movie.poster_path ? `${process.env.NEXT_PUBLIC_BASE_URL}${movie.poster_path}` : '/no-image.jpg'}
               alt='movie-poster'

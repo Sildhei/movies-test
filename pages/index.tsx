@@ -15,7 +15,6 @@ export default function Home({
   moviesData: { page: number; results: MovieProps[]; total_pages: number; total_results: number };
   genresData: { genres: GenreProps[] };
 }) {
-
   return (
     <>
       <Head>
