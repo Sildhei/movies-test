@@ -33,9 +33,6 @@ const NavBar = ({ colorMode }: { colorMode: { toggleColorMode: () => void } }) =
           <Switch onClick={colorMode.toggleColorMode} />
           <DarkModeIcon />
         </Box>
-        {/* <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color='inherit'>
-          {theme.palette.mode === 'dark' ? 'dark' : 'light'}
-        </IconButton> */}
       </Box>
     </div>
   );

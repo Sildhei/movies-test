@@ -1,6 +1,11 @@
-import { Box, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Box, Button, IconButton, MenuItem, TextField } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
-import { useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { nameSetting, genreSetting } from '../../redux/filters';
+import { useRouter } from 'next/router';
+import { red } from '@mui/material/colors';
+import ClearIcon from '@mui/icons-material/Clear';
 
 export interface GenreProps {
   id: number;
@@ -8,32 +13,119 @@ export interface GenreProps {
 }
 
 const FiltersSection = ({ genresData }: { genresData: { genres: GenreProps[] } }) => {
-  const [genre, setGenre] = useState();
+  const router = useRouter();
+
+  const filters = useSelector(
+    (state: {
+      filtersSetting: {
+        name: string;
+        genre: string;
+      };
+    }) => state.filtersSetting
+  );
+
+  const [inputValue, setInputValue] = useState(filters.name);
+
+  const dispatch = useDispatch();
+
+  const handleDeleteSearchInput = () => {
+    dispatch(nameSetting(''));
+    setInputValue('');
+    router.push('/');
+  };
+
+  const handleOnClearFilters = () => {
+    dispatch(genreSetting(''));
+    dispatch(nameSetting(''));
+    setInputValue('');
+    router.push('/');
+  };
+
+  const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleSelect = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    dispatch(genreSetting(e.target.value));
+    dispatch(nameSetting(''));
+    setInputValue('');
+    router.push(`/?genre=${e.target.value}`);
+  };
+
+  useEffect(() => {
+    if (inputValue === '') {
+      return;
+      // router.push(`/?genre=${filters.genre}`);
+    }
+    const delayInputTimeoutId = setTimeout(() => {
+      dispatch(nameSetting(inputValue));
+      dispatch(genreSetting(''));
+      router.push(`/?name=${inputValue}`);
+    }, 500);
+    return () => clearTimeout(delayInputTimeoutId);
+  }, [inputValue, 500]);
 
   return (
-    <Box display='flex' justifyContent='space-between' alignItems='center' my={2} fontSize='medium'>
+    <Box
+      display='flex'
+      flexDirection={{ xs: 'column', md: 'row' }}
+      justifyContent='space-between'
+      alignItems='center'
+      my={2}
+      fontSize='medium'>
       <h1>Movies List</h1>
-      <Box display='flex' justifyContent='space-between' alignItems='center'>
+      <Box
+        display='flex'
+        flexDirection={{ xs: 'column', sm: 'row' }}
+        gap={{ xs: 2, sm: 0 }}
+        justifyContent='space-between'
+        alignItems='center'>
         <Box>Filter by:</Box>
-        <TextField id='outlined-search' label='Name' type='search' size='small' sx={{ fontSize: 'small', ml: 2 }} />
-        <FormControl sx={{ ml: 2, width: 150 }} size='small'>
-          <InputLabel id='demo-select-small-label'>Genre</InputLabel>
-          <Select
-            labelId='demo-select-small-label'
-            id='demo-select-small'
-            value={genre}
+        <TextField
+          id={inputValue}
+          label='Name'
+          size='small'
+          sx={{ fontSize: 'small', ml: 2 }}
+          value={inputValue}
+          onChange={e => handleInput(e)}
+          InputProps={{
+            endAdornment: inputValue && (
+              <IconButton onClick={handleDeleteSearchInput}>
+                <ClearIcon fontSize='small'/>
+              </IconButton>
+            ),
+          }}
+        />
+        <FormControl sx={{ ml: 2, width: 150 }}>
+          <TextField
+            size='small'
+            select
+            id={filters.genre}
+            value={filters.genre}
             label='Genre'
-            onChange={e => console.log('e')}>
+            onChange={e => handleSelect(e)}>
             <MenuItem value=''>
               <em>None</em>
             </MenuItem>
-            {genresData.genres.map(genre => (
+            {genresData?.genres?.map(genre => (
               <MenuItem value={genre.id} key={genre.id}>
                 {genre.name}
               </MenuItem>
             ))}
-          </Select>
+          </TextField>
         </FormControl>
+        <Button
+          onClick={handleOnClearFilters}
+          variant='contained'
+          sx={{
+            marginLeft: 2,
+            bgcolor: red[800],
+            '&:hover': {
+              bgcolor: red[600],
+            },
+          }}>
+          <Box>Clear</Box>
+        </Button>
       </Box>
     </Box>
   );

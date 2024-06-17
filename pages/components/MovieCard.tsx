@@ -20,45 +20,47 @@ const MovieCard = ({ movie }: { movie: MovieProps }) => {
           transition: 'box-shadow 0.2s ease',
         },
       }}>
-      <Box height='280px' bgcolor={theme.palette.mode === 'dark' ? grey[900] : grey[300]}>
-        <Box position='relative' width='100%' height='180px'>
-          <Image
-            src={`${process.env.NEXT_PUBLIC_BASE_URL}${movie.poster_path}`}
-            alt='movie-poster'
-            fill
-            loading='lazy'
-            sizes='(min-width: 100px) 100vw'
-            style={{
-              objectFit: 'cover',
-            }}
-          />
-        </Box>
-        <Box p={1} pt={2} display='flex' flexDirection='column' justifyContent='space-between' height='100px'>
-          <Box
-            textAlign='center'
-            fontWeight='bold'
-            fontSize='14px'
-            sx={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              display: '-webkit-box',
-              WebkitLineClamp: '2',
-              WebkitBoxOrient: 'vertical',
-            }}>
-            {movie.title}
+      {movie && (
+        <Box height='280px' bgcolor={theme.palette.mode === 'dark' ? grey[900] : grey[300]}>
+          <Box position='relative' width='100%' height='180px'>
+            <Image
+              src={movie.poster_path ? `${process.env.NEXT_PUBLIC_BASE_URL}${movie.poster_path}` : '/no-image.jpg'}
+              alt='movie-poster'
+              fill
+              loading='lazy'
+              sizes='(min-width: 100px) 100vw'
+              style={{
+                objectFit: 'cover',
+              }}
+            />
           </Box>
-          <Box display='flex' justifyContent='space-between' alignItems='center' fontSize='12px'>
-            <Box display='flex' justifyContent='space-between' alignItems='center'>
-              <CalendarMonthIcon fontSize='small' style={{ color: red[800] }} />
-              <Box ml={1}> {movie.release_date.slice(0, 4)}</Box>
+          <Box p={1} pt={2} display='flex' flexDirection='column' justifyContent='space-between' height='100px'>
+            <Box
+              textAlign='center'
+              fontWeight='bold'
+              fontSize='14px'
+              sx={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                display: '-webkit-box',
+                WebkitLineClamp: '2',
+                WebkitBoxOrient: 'vertical',
+              }}>
+              {movie.title}
             </Box>
-            <Box display='flex' justifyContent='space-between' alignItems='center'>
-              <GradeIcon fontSize='small' style={{ color: yellow[700] }} />
-              <Box ml={1}> {movie.vote_average}</Box>
+            <Box display='flex' justifyContent='space-between' alignItems='center' fontSize='12px'>
+              <Box display='flex' justifyContent='space-between' alignItems='center'>
+                <CalendarMonthIcon fontSize='small' style={{ color: red[800] }} />
+                <Box ml={1}> {movie.release_date ? movie.release_date.slice(0, 4) : '-'}</Box>
+              </Box>
+              <Box display='flex' justifyContent='space-between' alignItems='center'>
+                <GradeIcon fontSize='small' style={{ color: yellow[700] }} />
+                <Box ml={1}> {movie.vote_average}</Box>
+              </Box>
             </Box>
           </Box>
         </Box>
-      </Box>
+      )}
     </Card>
   );
 };

@@ -8,7 +8,6 @@ export const roboto = Roboto({
   display: 'swap',
 });
 
-// Create a theme instance.
 const theme = createTheme({
   palette: {
     primary: {
