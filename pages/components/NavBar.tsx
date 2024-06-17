@@ -1,8 +1,8 @@
+import Link from 'next/link';
 import { Box, Switch } from '@mui/material';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import Brightness5Icon from '@mui/icons-material/Brightness5';
 import LiveTvIcon from '@mui/icons-material/LiveTv';
-import Link from 'next/link';
 
 const NavBar = ({ colorMode }: { colorMode: { toggleColorMode: () => void } }) => {
   return (

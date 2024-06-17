@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import { Box, Card } from '@mui/material';
 import { MovieProps } from '..';
-import Image from 'next/image';
 import { grey, yellow, red } from '@mui/material/colors';
 import { useTheme } from '@mui/material/styles';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';

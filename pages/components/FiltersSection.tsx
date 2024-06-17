@@ -1,9 +1,9 @@
-import { Box, Button, IconButton, MenuItem, TextField } from '@mui/material';
-import FormControl from '@mui/material/FormControl';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { nameSetting, genreSetting } from '../../redux/filters';
 import { useRouter } from 'next/router';
+import { nameSetting, genreSetting } from '../../redux/filters';
+import { Box, Button, IconButton, MenuItem, TextField } from '@mui/material';
+import FormControl from '@mui/material/FormControl';
 import { red } from '@mui/material/colors';
 import ClearIcon from '@mui/icons-material/Clear';
 
@@ -91,7 +91,7 @@ const FiltersSection = ({ genresData }: { genresData: { genres: GenreProps[] } }
           InputProps={{
             endAdornment: inputValue && (
               <IconButton onClick={handleDeleteSearchInput}>
-                <ClearIcon fontSize='small'/>
+                <ClearIcon fontSize='small' />
               </IconButton>
             ),
           }}

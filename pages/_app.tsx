@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useMemo, useState } from 'react';
+import { Provider } from 'react-redux';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
 import { AppCacheProvider } from '@mui/material-nextjs/v14-pagesRouter';
@@ -7,8 +9,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { amber, blueGrey, red, indigo } from '@mui/material/colors';
 import { PaletteMode } from '@mui/material';
 import Layout from './layout';
-import { useMemo, useState } from 'react';
-import { Provider } from 'react-redux';
+
 import store from '../redux/store';
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
@@ -63,17 +64,17 @@ export default function MyApp(props: AppProps) {
   return (
     <AppCacheProvider {...props}>
       <Provider store={store}>
-      <Head>
-        <meta name='viewport' content='initial-scale=1, width=device-width' />
-      </Head>
-      <ColorModeContext.Provider value={colorMode}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Layout colorMode={colorMode}>
-          <Component {...pageProps} colorMode={colorMode}/>
-          </Layout>
-        </ThemeProvider>
-      </ColorModeContext.Provider>
+        <Head>
+          <meta name='viewport' content='initial-scale=1, width=device-width' />
+        </Head>
+        <ColorModeContext.Provider value={colorMode}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Layout colorMode={colorMode}>
+              <Component {...pageProps} colorMode={colorMode} />
+            </Layout>
+          </ThemeProvider>
+        </ColorModeContext.Provider>
       </Provider>
     </AppCacheProvider>
   );

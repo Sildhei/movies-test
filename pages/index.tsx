@@ -1,12 +1,12 @@
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
+import Link from 'next/link';
 import axios from 'axios';
 import MovieCard from './components/MovieCard';
 import { Box, Grid } from '@mui/material';
 import Container from './components/Container';
 import { GenreProps } from './components/FiltersSection';
 import FiltersSection from './components/FiltersSection';
-import Link from 'next/link';
-import { GetServerSidePropsContext } from 'next';
 
 export interface MovieProps {
   adult: boolean;

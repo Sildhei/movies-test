@@ -1,14 +1,14 @@
-import { Box, Card, Grid, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
 import { GetServerSidePropsContext } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
+import { Box, Card, List, ListItem } from '@mui/material';
+import axios from 'axios';
 import { useTheme } from '@mui/material/styles';
 import Container from './components/Container';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import Link from 'next/link';
 import { grey, red } from '@mui/material/colors';
 import { MovieProps } from '.';
-import { useSelector } from 'react-redux';
 
 export interface MovieDetailsProps {
   adult: boolean;

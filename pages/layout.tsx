@@ -11,7 +11,6 @@ export default function Layout({
     <>
       <NavBar colorMode={colorMode}/>
       <main>{children}</main>
-      {/* <Footer /> */}
     </>
   );
 }

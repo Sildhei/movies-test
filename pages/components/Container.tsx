@@ -1,6 +1,5 @@
-import { Box } from '@mui/material';
-import React from 'react';
 import { ReactNode } from 'react';
+import { Box } from '@mui/material';
 
 const Container = ({
   children,
