@@ -22,7 +22,7 @@ const MovieCard = ({ movie }: { movie: MovieProps }) => {
       }}>
       {movie && (
         <Box height='280px' bgcolor={theme.palette.mode === 'dark' ? grey[900] : grey[300]}>
-          <Box position='relative' width='100%' height='180px'>
+          <div style={{ position: 'relative', width:'100%', height:'180px' }}>
             <Image
               src={movie.poster_path ? `${process.env.NEXT_PUBLIC_BASE_URL}${movie.poster_path}` : '/no-image.jpg'}
               alt='movie-poster'
@@ -33,7 +33,7 @@ const MovieCard = ({ movie }: { movie: MovieProps }) => {
                 objectFit: 'cover',
               }}
             />
-          </Box>
+          </div>
           <Box p={1} pt={2} display='flex' flexDirection='column' justifyContent='space-between' height='100px'>
             <Box
               textAlign='center'

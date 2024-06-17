@@ -22,16 +22,23 @@ const NavBar = ({ colorMode }: { colorMode: { toggleColorMode: () => void } }) =
         }}>
         <Link href='/' style={{ textDecoration: 'none', color: 'inherit' }}>
           <Box display='flex' alignItems='center' gap={1}>
-            <LiveTvIcon fontSize='large' />
+            <div style={{ width: 32, height: 32 }}>
+              <LiveTvIcon fontSize='large' />
+            </div>
+
             <Box fontSize='large' fontWeight='bold'>
               Movies Test
             </Box>
           </Box>
         </Link>
         <Box display='flex' alignItems='center'>
-          <Brightness5Icon />
+          <div style={{ width: 32, height: 32 }}>
+            <Brightness5Icon />
+          </div>
           <Switch onClick={colorMode.toggleColorMode} />
-          <DarkModeIcon />
+          <div style={{ width: 32, height: 32 }}>
+            <DarkModeIcon />
+          </div>
         </Box>
       </Box>
     </div>
